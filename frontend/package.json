@@ -1,0 +1,8 @@
+{
+  "name": "sblog_frontend",
+  "version": "1.0.0",
+  "description": "Simple blog frontend template",
+  "main": "index.js",
+  "author": "RxZ",
+  "license": "MIT"
+}
