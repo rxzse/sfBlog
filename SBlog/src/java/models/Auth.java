@@ -10,5 +10,5 @@ package models;
  * @author RxZ
  */
 public class Auth {
-    
+    // password, createTime, modifyTime
 }
