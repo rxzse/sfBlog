@@ -10,5 +10,5 @@ package models;
  * @author RxZ
  */
 public class Post {
-    
+    // _id, name, category ref, createdTime, modifyTime, alias
 }
