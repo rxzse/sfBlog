@@ -10,5 +10,5 @@ package models;
  * @author RxZ
  */
 public class Profile {
-    
+    // firstName, lastName, bio, desc, createTime, modifyTime
 }
