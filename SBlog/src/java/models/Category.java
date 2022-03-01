@@ -10,5 +10,5 @@ package models;
  * @author RxZ
  */
 public class Category {
-    
+    // _id, cateName, alias, description, shortUrl, image
 }
