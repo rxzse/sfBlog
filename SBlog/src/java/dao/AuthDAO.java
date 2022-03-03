@@ -4,11 +4,17 @@
  * and open the template in the editor.
  */
 package dao;
-
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.Auth;
 /**
  *
  * @author RxZ
  */
-public class AuthDAO {
+public class AuthDAO extends BaseDAO<Auth> {
     
 }
