@@ -5,7 +5,7 @@
         <div class="columns">
           <div class="column is-4">
             <h4>
-              Repo Remover by
+              SBlog by ThaiNV
               <!-- eslint-disable vue/multiline-html-element-content-newline -->
               <a href="https://twitter.com/zmoolla">Zaahir&nbsp;Moolla</a>.
               <!-- eslint-enable vue/multiline-html-element-content-newline -->
@@ -18,7 +18,7 @@
               <a href="https://opensource.org/licenses/mit-license.php">MIT</a>.
             </p>
             <!-- eslint-enable vue/singleline-html-element-content-newline -->
-            <p>Copyright © 2019</p>
+            <p>Copyright © 2022</p>
           </div>
           <div class="column is-narrow-tablet is-4-desktop">
             <h4>Contribute on GitHub</h4>
