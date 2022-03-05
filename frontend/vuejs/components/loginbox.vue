@@ -9,8 +9,8 @@ export default {
     return {
       isLoading: false,
       form: {
-        email: "john.doe@example.com",
-        password: "my-secret-password-9e9w",
+        email: "adminstrator@email",
+        password: "yourblogidpassword",
         remember: false,
       },
     };
