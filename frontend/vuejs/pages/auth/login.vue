@@ -42,8 +42,7 @@
 </template>
 
 <script lang="ts">
-import md5 from "blueimp-md5";
-import Vue from "vue";
+// Clear
 export default Vue.extend({
   middleware: ["auth"],
   data() {
