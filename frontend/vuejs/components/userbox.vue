@@ -2,7 +2,7 @@
   <article class="media">
     <div class="media-content">
       <div class="content">
-        <b-button size="is-small">Nạp tiền</b-button>
+        <b-button size="is-small">Tài khoản</b-button>
         <b-button size="is-small">Normal</b-button>
         <hr />
         <b-tag type="is-primary" size="is-medium">Số dư: </b-tag>
