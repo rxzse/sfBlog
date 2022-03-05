@@ -11,21 +11,19 @@
       narrowed
       hoverable
     >
-      <b-table-column v-slot="props" label="Tên sản phẩm" field="name" sortable>
+      <b-table-column v-slot="props" label="Bài viết" field="name" sortable>
         {{ props.row.name }}
       </b-table-column>
-      <b-table-column v-slot="props" label="Quốc gia" field="country" centered>
+      <b-table-column v-slot="props" label="Tác giả" field="country" centered>
         <b-tag type="is-primary">{{ props.row.country }}</b-tag>
       </b-table-column>
       <b-table-column v-slot="props" label="Mô tả" field="desc" sortable>
         {{ props.row.desc }}
       </b-table-column>
-      <b-table-column v-slot="props" label="Đơn giá" field="unitPrice" sortable>
+      <b-table-column v-slot="props" label="Chuyên mục" field="unitPrice" sortable>
         {{ formatNumber(props.row.unitPrice) }}
       </b-table-column>
-      <b-table-column v-slot="props" label="Số lượng" field="inStock" sortable>
-        {{ props.row.inStock }}
-      </b-table-column>
+      
       <b-table-column
         v-slot="props"
         custom-key="actions"
