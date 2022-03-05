@@ -17,26 +17,6 @@
 
         <a
           class="navbar-item"
-          :class="{ 'has-text-dark': !light }"
-          href="https://github.com/buefy/buefy"
-          target="_blank"
-          title="Github"
-        >
-          <b-icon icon="github-circle" />
-        </a>
-
-        <a
-          class="navbar-item"
-          :class="{ 'has-text-discord': !light }"
-          href="https://discordapp.com/invite/ZkdFJMr"
-          target="_blank"
-          title="Discord"
-        >
-          <b-icon icon="discord" />
-        </a>
-
-        <a
-          class="navbar-item"
           :class="{ 'has-text-twitter': !light }"
           href="https://twitter.com/walter_tommasi"
           target="_blank"
