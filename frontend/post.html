@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Blog</title>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+</head>
+
+<body>
+    <!-- Nav Bảr -->
+    <nav class="navbar is-white topNav">
+        <div class="container">
+            <div class="navbar-brand">
+                <div class="navbar-burger burger" data-target="topNav">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div id="topNav" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="/">Home</a>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <a class="button is-small is-info is-outlined">
+                                    <span class="icon">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                    <span>Login</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="container">
+        <div class="columns">
+            <!-- Aside Menu -->
+            <div class="column is-3">
+                <aside class="menu">
+                    <p class="menu-label">
+                        Categories
+                    </p>
+                    <ul class="menu-list">
+                        <li><span class="tag is-primary is-medium ">Category 1</span></li>
+                        <li><span class="tag is-primary is-medium ">Category 2</span></li>
+                        <li><span class="tag is-primary is-medium ">Category 3</span></li>
+                        <li><span class="tag is-primary is-medium ">Category 4</span></li>
+                    </ul>
+                    <p class="menu-label">
+                        Tags
+                    </p>
+                    <ul class="menu-list">
+                        <li><span class="tag is-link is-medium ">Tag 1</span></li>
+                        <li><span class="tag is-link is-medium ">Tag 2</span></li>
+                    </ul>
+                </aside>
+            </div>
+            <!-- Content list -->
+            <div class="column is-9">
+                <div class="box content">
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <div class="columns is-mobile is-centered">
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <a class="tag is-link" href="https://github.com/BulmaTemplates/bulma-templates">Bulma
+                                    Created</a>
+                                <span class="tag is-light">RxZ</span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <a class="tag is-link">The source code is licensed</a>
+                                <span class="tag is-light">MIT &nbsp;<i class="fa fa-github"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script async type="text/javascript" src="./js/base.js"></script>
+</body>
+
+</html>
