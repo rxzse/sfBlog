@@ -1,0 +1,1 @@
+var mdHtml = window.markdownit
