@@ -1,0 +1,13 @@
+_POST
+    id: int
+    title: string
+    alias: string
+    html_content: string
+    markdown_content: string
+    category: ref
+    labels: array_string
+    isDraft: boolean
+    isActive: boolean
+    createTime: date
+    modifyTime: date
+    publishTime?: date
