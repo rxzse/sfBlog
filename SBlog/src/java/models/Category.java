@@ -13,6 +13,7 @@ public class Category {
     // _id, cateName, alias, description, shortUrl, image, createTime, modifyTime
     private String _id, cateName, alias, description, shortUrl, image;
     private Date createTime, modifyTime;
+    private int sequence;
 
     public Category() {
     }
