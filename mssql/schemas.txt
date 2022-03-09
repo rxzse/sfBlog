@@ -19,3 +19,31 @@ _CATEGORY:
     sequence: number
     createTime: date
     modifyTime: date
+
+_COMMENT:
+    post: ref
+    username: string
+    content: string
+    createTime: date
+
+_AUTH:
+    id: int
+    password: string
+    createTime: date
+    modifyTime: date
+
+_SETTING:
+    id: int
+    blogName: string
+    blogIntro: string
+    postPageSize: int
+
+_PROFILE:
+    id: int
+    fullName: string
+    avatar: string
+    intro: string
+    email: string
+    createTime: date
+    modifyTime: date
+
