@@ -21,12 +21,6 @@ _CATEGORY:
     createTime: date
     modifyTime: date
 
-_COMMENT:
-    post: ref_post
-    username: string
-    content: string
-    createTime: date
-
 _AUTH:
     id: int
     password: string
