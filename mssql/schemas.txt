@@ -2,9 +2,9 @@ _POST
     id: int
     title: string
     alias: string
-    html: string
+    html: string < base on markdown render >
     markdown: string
-    category: ref
+    category: ref_category
     labels: array_string
     isDraft: boolean
     isActive: boolean
@@ -16,12 +16,13 @@ _CATEGORY:
     id: int
     cateName: string
     alias: string
+    img?: string
     sequence: number
     createTime: date
     modifyTime: date
 
 _COMMENT:
-    post: ref
+    post: ref_post
     username: string
     content: string
     createTime: date
