@@ -22,7 +22,7 @@ public abstract class BaseDAO<T> {
        try {
            String user = "sa";
            String pass = "123456";
-           String url = "jdbc:sqlserver://localhost\\RXZSQL;databaseName=DBBLOG";
+           String url = "jdbc:sqlserver://localhost;databaseName=SFBLOG";
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
            connection = DriverManager.getConnection(url, user, pass);
        } catch (ClassNotFoundException | SQLException ex) {
