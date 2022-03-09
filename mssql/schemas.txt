@@ -2,8 +2,8 @@ _POST
     id: int
     title: string
     alias: string
-    html_content: string
-    markdown_content: string
+    html: string
+    markdown: string
     category: ref
     labels: array_string
     isDraft: boolean
@@ -11,3 +11,11 @@ _POST
     createTime: date
     modifyTime: date
     publishTime?: date
+
+_CATEGORY:
+    id: int
+    cateName: string
+    alias: string
+    sequence: number
+    createTime: date
+    modifyTime: date
