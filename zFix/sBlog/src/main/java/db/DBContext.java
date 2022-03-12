@@ -13,11 +13,11 @@ import java.sql.DriverManager;
 public class DBContext {
 
   public Connection getConnection() throws Exception {
-    Class.forName("com.mysql.jdbc.Driver");
+    Class.forName("com.mysql.cj.jdbc.Driver");
     return DriverManager.getConnection(URI, user, password);
   }
 
   private final String URI = "jdbc:mysql://localhost:3306/sfblog_test";
   private final String user = "root";
-  private final String password = "123456";
+  private final String password = "rxz232198";
 }
