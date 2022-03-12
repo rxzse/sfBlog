@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.sql.Date;
+
 /**
  *
  * @author RxZ
@@ -31,6 +33,8 @@ public class AuthDAO {
             boolean result = rs.next();
             
             conn.close();
+            
+            return result;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,18 +43,22 @@ public class AuthDAO {
 
     }
 
-    public boolean newAccount() {
-
+    public static boolean newAccount(String password) {
+        
         try {
+            Date cur = new Date(System.currentTimeMillis());
             Connection conn = db.getConnection();
-
-            PreparedStatement ps = conn.prepareStatement(
-                    "select 1 from auth");
-            ResultSet rs = ps.executeQuery();
-            
-            boolean result = rs.next();
+           
+            String sql = "insert into auth (password, createTime, modifyTime) values (?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setDate(2, cur);
+            ps.setDate(3, cur);
+            boolean result = ps.executeUpdate() != 0;
             
             conn.close();
+            
+            return result;
 
         } catch (Exception e) {
             e.printStackTrace();
