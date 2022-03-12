@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.time.LocalDateTime;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -44,9 +46,9 @@ public class AuthDAO {
     }
 
     public static boolean newAccount(String password) {
-        
+//        boolean eAcc = AuthDAO.existsAccount();
         try {
-            Date cur = new Date(System.currentTimeMillis());
+            Date cur = Date.valueOf(LocalDate.now());
             Connection conn = db.getConnection();
            
             String sql = "insert into auth (password, createTime, modifyTime) values (?, ?, ?)";
