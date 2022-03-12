@@ -68,8 +68,58 @@ public class AuthDAO {
         return false;
 
     }
+    
+    public static boolean validate(String password) {
+        try {
+            String passGet = null;
+            
+            Connection conn = db.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "select password from auth where id=0");
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                passGet = rs.getString(1);
+            }
+            
+            conn.close();
+            
+            return passGet.equals(password);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+    
+    public static boolean changePassword(String oldPass, String newPass) {
+//        boolean eAcc = AuthDAO.existsAccount();
+        try {
+            Date cur = Date.valueOf(LocalDate.now());
+            Connection conn = db.getConnection();
+           
+            String sql = "update auth set password = ?, modifyTime = ? where password = ?";
+            System.out.println(sql);
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, newPass);
+            ps.setDate(2, cur);
+            ps.setString(3, oldPass);
+            boolean result = ps.executeUpdate() != 0;
+            
+            conn.close();
+            
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
 
     public static void main(String[] args) {
-        System.out.println(AuthDAO.existsAccount());
+        System.out.println(AuthDAO.changePassword("rxz232199", "rxz2321"));
     }
 }
