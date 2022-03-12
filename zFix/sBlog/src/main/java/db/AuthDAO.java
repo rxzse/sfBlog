@@ -48,7 +48,7 @@ public class AuthDAO {
     public static boolean newAccount(String password) {
 //        boolean eAcc = AuthDAO.existsAccount();
         try {
-            Date cur = Date.valueOf(LocalDate.now());
+            Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
            
             String sql = "insert into auth (password, createTime, modifyTime) values (?, ?, ?)";
@@ -97,7 +97,7 @@ public class AuthDAO {
     public static boolean changePassword(String oldPass, String newPass) {
 //        boolean eAcc = AuthDAO.existsAccount();
         try {
-            Date cur = Date.valueOf(LocalDate.now());
+            Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
            
             String sql = "update auth set password = ?, modifyTime = ? where password = ?";
@@ -120,6 +120,6 @@ public class AuthDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(AuthDAO.changePassword("rxz232199", "rxz2321"));
+        System.out.println(AuthDAO.changePassword("rxz2321", "rxz232198"));
     }
 }
