@@ -14,7 +14,7 @@ public class Post {
     private String title;
     private String alias;
     private String html;
-    private String []labels;
+    private String labels;
     private boolean isDraft;
     private boolean isActive;
     private Date createTime;
