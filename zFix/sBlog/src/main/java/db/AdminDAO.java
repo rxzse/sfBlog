@@ -17,6 +17,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 import models.Post;
+import models.PostFilter;
 import models.Category;
 
 /**
@@ -141,6 +142,48 @@ public class AdminDAO {
     }
 
     // Region for posts management
+    public static ArrayList<Post> getPosts(PostFilter pf) {
+        ArrayList<Post> posts = new ArrayList<>();
+        try {
+            Connection conn = db.getConnection();
+            String condition = "isActive = ? and isDraft = ?";
+            // by category
+            if (pf.getCategory() != -1) condition += " and category = ?";
+            
+            
+            // by title
+            if (pf.getTitle() != null)
+                condition += " and lower(title) like '%?%'";
+            
+            // by publish time
+            if (pf.getCreateTimeStart() != null && pf.getCreateTimeEnd() != null) {
+                condition += " and (createTime between ? and ?)";
+                
+            PreparedStatement ps = conn.prepareStatement("select * from post");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                posts.add(new Post(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("alias"),
+                        rs.getInt("sequence"),
+                        rs.getDate("createTime"),
+                        rs.getDate("modifyTime"),
+                        rs.getInt("postCount")
+                ));
+            };
+
+            conn.close();
+
+            return posts;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static Post getPostById(int id) {
         Post ret = null;
         try {
@@ -244,7 +287,7 @@ public class AdminDAO {
         boolean isSuccess = false;
         try {
             Connection conn = db.getConnection();
-            
+
             String sql_del = "delete from post where id = ?";
             PreparedStatement ps = conn.prepareStatement(sql_del);
             ps.setInt(1, id);
