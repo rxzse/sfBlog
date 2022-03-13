@@ -34,7 +34,7 @@ public class AdminDAO {
             Connection conn = db.getConnection();
 
             PreparedStatement ps = conn.prepareStatement(
-                    "select * from category order by sequence");
+                    "select category.id, category.name, category.alias, category.sequence, category.createTime, category.modifyTime, count(post.id) as postCount from (category left join post on category.id = post.category) group by id order by sequence");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -44,7 +44,8 @@ public class AdminDAO {
                         rs.getString("alias"),
                         rs.getInt("sequence"),
                         rs.getDate("createTime"),
-                        rs.getDate("modifyTime")
+                        rs.getDate("modifyTime"),
+                        rs.getInt("postCount")
                 ));
             };
 
@@ -124,13 +125,11 @@ public class AdminDAO {
             ps.executeUpdate();
 
             // Delete current category
-            
             String sql_del = "delete from category where id = ?";
             ps = conn.prepareStatement(sql_del);
             ps.setInt(1, id);
             isSuccess = ps.executeUpdate() != 0;
 
-            
             conn.close();
             return isSuccess;
 
@@ -140,24 +139,38 @@ public class AdminDAO {
         return false;
 
     }
-    
+
     // Region for posts management
-    public static ArrayList<Post> getPost() {
-        ArrayList<Post> categories = new ArrayList<>();
+    public static Post getPostById(int id) {
+        Post ret = null;
         try {
             Connection conn = db.getConnection();
 
             PreparedStatement ps = conn.prepareStatement(
-                    "select * from category order by sequence");
+                    "select * from post where id = ?");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                categories.add(new Post());
+            if (rs.next()) {
+                ret = new Post(
+                        rs.getInt("id"),
+                        rs.getInt("category"),
+                        rs.getString("title"),
+                        rs.getString("alias"),
+                        rs.getString("html"),
+                        rs.getString("markdown"),
+                        rs.getString("labels"),
+                        rs.getBoolean("isDraft"),
+                        rs.getBoolean("isActive"),
+                        rs.getDate("createTime"),
+                        rs.getDate("modifyTime"),
+                        rs.getDate("publishTime")
+                );
             };
 
             conn.close();
 
-            return categories;
+            return ret;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,7 +190,7 @@ public class AdminDAO {
             ps.setString(2, nPost.getAlias());
             ps.setString(3, nPost.getHtml());
             ps.setString(4, nPost.getMarkdown());
-            
+
             ps.setString(5, nPost.getLabels());
             ps.setBoolean(6, nPost.isIsDraft());
             ps.setBoolean(7, nPost.isIsActive());
@@ -196,18 +209,24 @@ public class AdminDAO {
 
     }
 
-    public static boolean editPost(int id, Category cartUpd) {
+    public static boolean editPost(int id, Post uPost) {
         try {
             Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
 
-            String sql = "update category set name = ?, alias = ?, sequence = ?, modifyTime = ? where id = ?";
+            String sql = "update post set title = ?, alias = ?, html = ?, markdown = ?, labels = ?, isDraft = ?, isActive = ?, modifyTime = ?, publishTime = ?, category = ? where id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, cartUpd.getName());
-            ps.setString(2, cartUpd.getAlias());
-            ps.setInt(3, cartUpd.getSequence());
-            ps.setDate(4, cur);
-            ps.setInt(5, id);
+            ps.setString(1, uPost.getTitle());
+            ps.setString(2, uPost.getAlias());
+            ps.setString(3, uPost.getHtml());
+            ps.setString(4, uPost.getMarkdown());
+            ps.setString(5, uPost.getLabels());
+            ps.setBoolean(6, uPost.isIsDraft());
+            ps.setBoolean(7, uPost.isIsActive());
+            ps.setDate(8, cur);
+            ps.setDate(9, cur);
+            ps.setInt(10, uPost.getCategory());
+            ps.setInt(11, id);
             boolean result = ps.executeUpdate() != 0;
 
             conn.close();
@@ -223,27 +242,14 @@ public class AdminDAO {
 
     public static boolean deletePost(int id) {
         boolean isSuccess = false;
-        int otherCateId = 1;
         try {
-            Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
+            
+            String sql_del = "delete from post where id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql_del);
+            ps.setInt(1, id);
+            isSuccess = ps.executeUpdate() != 0;
 
-            // Update all post in current category to others
-            String sql_posts = "update post set category = ? where category = ?";
-            PreparedStatement ps = conn.prepareStatement(sql_posts);
-            ps.setInt(1, otherCateId);
-            ps.setInt(2, id);
-            boolean isPostsUpdated = ps.executeUpdate() != 0;
-
-            // Delete current category
-            if (isPostsUpdated) {
-                System.out.println("delete category");
-                String sql_del = "delete category where id = ?";
-                ps = conn.prepareStatement(sql_del);
-                ps.setInt(1, id);
-                isSuccess = ps.executeUpdate() != 0;
-
-            }
             conn.close();
             return isSuccess;
 
@@ -255,10 +261,11 @@ public class AdminDAO {
     }
 
     public static void main(String[] args) {
-        String []aaa = {"nvt", "abc"};
-        Post nP = new Post(0, 3, "Anmh", "ann1", "1232", "1232", aaa, true, true, null, null, null);
-        
-        System.out.println(AdminDAO.deleteCategory(3));
+        String[] aaa = {"nvt", "abc"};
+        Post nP = new Post(0, 2, "Edited23", "ann0144", "1232", "1232", "aaa", true, true, null, null, null);
+        Category nC = new Category(3, "NvT", "rxzaa", 10023, null, null);
+//        AdminDAO.newCategory(nC);
+//        System.out.println(AdminDAO.newPost(nP));
         ArrayList<Category> ct = AdminDAO.getCategories();
         for (Category i : ct) {
             System.out.println(i);

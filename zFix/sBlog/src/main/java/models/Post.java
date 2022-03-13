@@ -139,4 +139,9 @@ public class Post {
         this.publishTime = publishTime;
     }
 
+    @Override
+    public String toString() {
+        return "Post{" + "id=" + id + ", category=" + category + ", title=" + title + ", alias=" + alias + ", html=" + html + ", markdown=" + markdown + ", labels=" + labels + ", isDraft=" + isDraft + ", isActive=" + isActive + ", createTime=" + createTime + ", modifyTime=" + modifyTime + ", publishTime=" + publishTime + '}';
+    }
+
 }

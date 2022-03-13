@@ -16,6 +16,9 @@ public class Category {
     private int sequence;
     private Date createTime;
     private Date modifyTime;
+    
+    // base for stats
+    private int postCount;
 
     public Category() {
     }
@@ -28,6 +31,18 @@ public class Category {
         this.createTime = createTime;
         this.modifyTime = modifyTime;
     }
+
+    public Category(int id, String name, String alias, int sequence, Date createTime, Date modifyTime, int postCount) {
+        this.id = id;
+        this.name = name;
+        this.alias = alias;
+        this.sequence = sequence;
+        this.createTime = createTime;
+        this.modifyTime = modifyTime;
+        this.postCount = postCount;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -77,10 +92,21 @@ public class Category {
         this.modifyTime = modifyTime;
     }
 
+    public int getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(int postCount) {
+        this.postCount = postCount;
+    }
+
     @Override
     public String toString() {
-        return "Category{" + "id=" + id + ", name=" + name + ", alias=" + alias + ", sequence=" + sequence + ", createTime=" + createTime + ", modifyTime=" + modifyTime + '}';
+        return "Category{" + "id=" + id + ", name=" + name + ", alias=" + alias + ", sequence=" + sequence + ", createTime=" + createTime + ", modifyTime=" + modifyTime + ", postCount=" + postCount + '}';
     }
     
+    
+
+
     
 }
