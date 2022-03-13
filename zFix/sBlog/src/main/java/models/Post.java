@@ -3,17 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package models;
+
 import java.sql.Date;
+
 /**
  *
  * @author RxZ
  */
 public class Post {
+
     private int id;
     private int category;
     private String title;
     private String alias;
     private String html;
+    private String markdown;
     private String labels;
     private boolean isDraft;
     private boolean isActive;
@@ -24,18 +28,27 @@ public class Post {
     public Post() {
     }
 
-    public Post(int id, int category, String title, String alias, String html, String[] labels, boolean isDraft, boolean isActive, Date createTime, Date modifyTime, Date publishTime) {
+    public Post(int id, int category, String title, String alias, String html, String markdown, String labels, boolean isDraft, boolean isActive, Date createTime, Date modifyTime, Date publishTime) {
         this.id = id;
         this.category = category;
         this.title = title;
         this.alias = alias;
         this.html = html;
+        this.markdown = markdown;
         this.labels = labels;
         this.isDraft = isDraft;
         this.isActive = isActive;
         this.createTime = createTime;
         this.modifyTime = modifyTime;
         this.publishTime = publishTime;
+    }
+
+    public String getMarkdown() {
+        return markdown;
+    }
+
+    public void setMarkdown(String markdown) {
+        this.markdown = markdown;
     }
 
     public int getId() {
@@ -78,11 +91,11 @@ public class Post {
         this.html = html;
     }
 
-    public String[] getLabels() {
+    public String getLabels() {
         return labels;
     }
 
-    public void setLabels(String[] labels) {
+    public void setLabels(String labels) {
         this.labels = labels;
     }
 
@@ -125,6 +138,5 @@ public class Post {
     public void setPublishTime(Date publishTime) {
         this.publishTime = publishTime;
     }
-    
-    
+
 }

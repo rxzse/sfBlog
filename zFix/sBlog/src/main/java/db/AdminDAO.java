@@ -111,7 +111,7 @@ public class AdminDAO {
 
     public static boolean deleteCategory(int id) {
         boolean isSuccess = false;
-        int otherCateId = 10000;
+        int otherCateId = 1;
         try {
             Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
@@ -119,18 +119,18 @@ public class AdminDAO {
             // Update all post in current category to others
             String sql_posts = "update post set category = ? where category = ?";
             PreparedStatement ps = conn.prepareStatement(sql_posts);
-            ps.setInt(1, id);
-            ps.setInt(2, otherCateId);
-            boolean isPostsUpdated = ps.executeUpdate() != 0;
+            ps.setInt(1, otherCateId);
+            ps.setInt(2, id);
+            ps.executeUpdate();
 
             // Delete current category
-            if (isPostsUpdated) {
-                String sql_del = "delete category where id = ?";
-                ps = conn.prepareStatement(sql_del);
-                ps.setInt(1, id);
-                isSuccess = ps.executeUpdate() != 0;
+            
+            String sql_del = "delete from category where id = ?";
+            ps = conn.prepareStatement(sql_del);
+            ps.setInt(1, id);
+            isSuccess = ps.executeUpdate() != 0;
 
-            }
+            
             conn.close();
             return isSuccess;
 
@@ -166,22 +166,27 @@ public class AdminDAO {
         return null;
     }
 
-    public static boolean newPost(Post Post) {
+    public static boolean newPost(Post nPost) {
         try {
             Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
 
-            String sql = "insert into category (name, alias, sequence, createTime, modifyTime) values (?, ?, ?, ?, ?)";
+            String sql = "insert into post (title, alias, html, markdown, labels, isDraft, isActive, createTime, modifyTime, publishTime, category) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, cartInsert.getName());
-            ps.setString(2, cartInsert.getAlias());
-            ps.setInt(3, cartInsert.getSequence());
-            ps.setDate(4, cur);
-            ps.setDate(5, cur);
+            ps.setString(1, nPost.getTitle());
+            ps.setString(2, nPost.getAlias());
+            ps.setString(3, nPost.getHtml());
+            ps.setString(4, nPost.getMarkdown());
+            
+            ps.setString(5, nPost.getLabels());
+            ps.setBoolean(6, nPost.isIsDraft());
+            ps.setBoolean(7, nPost.isIsActive());
+            ps.setDate(8, cur);
+            ps.setDate(9, cur);
+            ps.setDate(10, cur);
+            ps.setInt(11, nPost.getCategory());
             boolean result = ps.executeUpdate() != 0;
-
             conn.close();
-
             return result;
 
         } catch (Exception e) {
@@ -191,7 +196,7 @@ public class AdminDAO {
 
     }
 
-    public static boolean editCategory(int id, Category cartUpd) {
+    public static boolean editPost(int id, Category cartUpd) {
         try {
             Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
@@ -216,9 +221,9 @@ public class AdminDAO {
 
     }
 
-    public static boolean deleteCategory(int id) {
+    public static boolean deletePost(int id) {
         boolean isSuccess = false;
-        int otherCateId = 10000;
+        int otherCateId = 1;
         try {
             Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
@@ -226,12 +231,13 @@ public class AdminDAO {
             // Update all post in current category to others
             String sql_posts = "update post set category = ? where category = ?";
             PreparedStatement ps = conn.prepareStatement(sql_posts);
-            ps.setInt(1, id);
-            ps.setInt(2, otherCateId);
+            ps.setInt(1, otherCateId);
+            ps.setInt(2, id);
             boolean isPostsUpdated = ps.executeUpdate() != 0;
 
             // Delete current category
             if (isPostsUpdated) {
+                System.out.println("delete category");
                 String sql_del = "delete category where id = ?";
                 ps = conn.prepareStatement(sql_del);
                 ps.setInt(1, id);
@@ -249,8 +255,10 @@ public class AdminDAO {
     }
 
     public static void main(String[] args) {
-        Category newCate = new Category(-1, "Othersss", "miumiu1", 10000, null, null);
-        System.out.println(AdminDAO.editCategory(1, newCate));
+        String []aaa = {"nvt", "abc"};
+        Post nP = new Post(0, 3, "Anmh", "ann1", "1232", "1232", aaa, true, true, null, null, null);
+        
+        System.out.println(AdminDAO.deleteCategory(3));
         ArrayList<Category> ct = AdminDAO.getCategories();
         for (Category i : ct) {
             System.out.println(i);
