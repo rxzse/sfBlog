@@ -27,6 +27,7 @@ public class AdminDAO {
 
     private static DBContext db = new DBContext();
 
+    // Region for category management
     public static ArrayList<Category> getCategories() {
         ArrayList<Category> categories = new ArrayList<>();
         try {
@@ -59,7 +60,6 @@ public class AdminDAO {
     }
     
     public static boolean newCategory(Category cartInsert) {
-//        boolean eAcc = AuthDAO.existsAccount();
         try {
             Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
@@ -69,8 +69,58 @@ public class AdminDAO {
             ps.setString(1, cartInsert.getName());
             ps.setString(2, cartInsert.getAlias());
             ps.setInt(3, cartInsert.getSequence());
-            ps.setDate(4, cartInsert.getCreateTime());
-            ps.setDate(5, cartInsert.getModifyTime());
+            ps.setDate(4, cur);
+            ps.setDate(5, cur);
+            boolean result = ps.executeUpdate() != 0;
+            
+            conn.close();
+            
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+    
+    public static boolean editCategory(int id, Category cartUpd) {
+        try {
+            Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
+            Connection conn = db.getConnection();
+           
+            String sql = "update category set name = ?, alias = ?, sequence = ?, modifyTime = ? where id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, cartUpd.getName());
+            ps.setString(2, cartUpd.getAlias());
+            ps.setInt(3, cartUpd.getSequence());
+            ps.setDate(4, cur);
+            ps.setInt(5, id);
+            boolean result = ps.executeUpdate() != 0;
+            
+            conn.close();
+            
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+    
+    public static boolean deleteCategory(int id) {
+        try {
+            Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
+            Connection conn = db.getConnection();
+           
+            String sql_posts = "update category set name = ?, alias = ?, sequence = ?, modifyTime = ? where id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, cartUpd.getName());
+            ps.setString(2, cartUpd.getAlias());
+            ps.setInt(3, cartUpd.getSequence());
+            ps.setDate(4, cur);
+            ps.setInt(5, id);
             boolean result = ps.executeUpdate() != 0;
             
             conn.close();
@@ -85,6 +135,8 @@ public class AdminDAO {
     }
     
      public static void main(String[] args) {
+         Category newCate = new Category(-1, "Othersss", "miumiu1", 10000, null, null);
+         System.out.println(AdminDAO.editCategory(1, newCate));
          ArrayList<Category> ct = AdminDAO.getCategories();
          for (Category i: ct) {
              System.out.println(i);
