@@ -153,23 +153,51 @@ public class AdminDAO {
             
             // by title
             if (pf.getTitle() != null)
-                condition += " and lower(title) like '%?%'";
+                condition += " and lower(title) like ?";
             
             // by publish time
-            if (pf.getCreateTimeStart() != null && pf.getCreateTimeEnd() != null) {
+            if (pf.getCreateTimeStart() != null && pf.getCreateTimeEnd() != null)
                 condition += " and (createTime between ? and ?)";
-                
-            PreparedStatement ps = conn.prepareStatement("select * from post");
+            
+            System.out.println(condition);
+            PreparedStatement ps = conn.prepareStatement("select * from post where " + condition + " order by publishTime desc");
+            ps.setBoolean(1, pf.isIsActive());
+            ps.setBoolean(2, pf.isIsDraft());
+            
+            int _curIndex = 3;
+            if (condition.contains("category")) {
+                ps.setInt(_curIndex, pf.getCategory());
+                _curIndex += 1;
+            }
+            
+            if (condition.contains("title")) {
+                ps.setString(_curIndex, "%" + pf.getTitle().toLowerCase() + "%");
+                _curIndex += 1;
+            }
+            
+            if (condition.contains("createTime")) {
+                ps.setDate(_curIndex, pf.getCreateTimeStart());
+                _curIndex += 1;
+                ps.setDate(_curIndex, pf.getCreateTimeEnd());
+                _curIndex += 1;
+            }
+            
+            System.out.println(ps.toString());
+            
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 posts.add(new Post(
                         rs.getInt("id"),
-                        rs.getString("name"),
+                        rs.getInt("category"),
+                        rs.getString("title"),
                         rs.getString("alias"),
-                        rs.getInt("sequence"),
+                        rs.getString("html"),
+                        rs.getString("markdown"),
+                        rs.getBoolean("isDraft"),
+                        rs.getBoolean("isActive"),
                         rs.getDate("createTime"),
                         rs.getDate("modifyTime"),
-                        rs.getInt("postCount")
+                        rs.getDate("publishTime")
                 ));
             };
 
@@ -202,7 +230,6 @@ public class AdminDAO {
                         rs.getString("alias"),
                         rs.getString("html"),
                         rs.getString("markdown"),
-                        rs.getString("labels"),
                         rs.getBoolean("isDraft"),
                         rs.getBoolean("isActive"),
                         rs.getDate("createTime"),
@@ -234,7 +261,7 @@ public class AdminDAO {
             ps.setString(3, nPost.getHtml());
             ps.setString(4, nPost.getMarkdown());
 
-            ps.setString(5, nPost.getLabels());
+            ps.setString(5, "nothing");
             ps.setBoolean(6, nPost.isIsDraft());
             ps.setBoolean(7, nPost.isIsActive());
             ps.setDate(8, cur);
@@ -263,7 +290,7 @@ public class AdminDAO {
             ps.setString(2, uPost.getAlias());
             ps.setString(3, uPost.getHtml());
             ps.setString(4, uPost.getMarkdown());
-            ps.setString(5, uPost.getLabels());
+            ps.setString(5, "nothing");
             ps.setBoolean(6, uPost.isIsDraft());
             ps.setBoolean(7, uPost.isIsActive());
             ps.setDate(8, cur);
@@ -305,12 +332,17 @@ public class AdminDAO {
 
     public static void main(String[] args) {
         String[] aaa = {"nvt", "abc"};
-        Post nP = new Post(0, 2, "Edited23", "ann0144", "1232", "1232", "aaa", true, true, null, null, null);
+        Post nP = new Post(0, 2, "Edited23", "1232", "1232", "aaa", true, true, null, null, null);
         Category nC = new Category(3, "NvT", "rxzaa", 10023, null, null);
 //        AdminDAO.newCategory(nC);
 //        System.out.println(AdminDAO.newPost(nP));
         ArrayList<Category> ct = AdminDAO.getCategories();
         for (Category i : ct) {
+            System.out.println(i);
+        }
+        
+        ArrayList<Post> cc = AdminDAO.getPosts(new PostFilter(1, "it", true, true, null, null));
+        for (Post i : cc) {
             System.out.println(i);
         }
     }

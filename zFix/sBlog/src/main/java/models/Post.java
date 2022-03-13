@@ -18,7 +18,6 @@ public class Post {
     private String alias;
     private String html;
     private String markdown;
-    private String labels;
     private boolean isDraft;
     private boolean isActive;
     private Date createTime;
@@ -28,27 +27,18 @@ public class Post {
     public Post() {
     }
 
-    public Post(int id, int category, String title, String alias, String html, String markdown, String labels, boolean isDraft, boolean isActive, Date createTime, Date modifyTime, Date publishTime) {
+    public Post(int id, int category, String title, String alias, String html, String markdown, boolean isDraft, boolean isActive, Date createTime, Date modifyTime, Date publishTime) {
         this.id = id;
         this.category = category;
         this.title = title;
         this.alias = alias;
         this.html = html;
         this.markdown = markdown;
-        this.labels = labels;
         this.isDraft = isDraft;
         this.isActive = isActive;
         this.createTime = createTime;
         this.modifyTime = modifyTime;
         this.publishTime = publishTime;
-    }
-
-    public String getMarkdown() {
-        return markdown;
-    }
-
-    public void setMarkdown(String markdown) {
-        this.markdown = markdown;
     }
 
     public int getId() {
@@ -91,12 +81,12 @@ public class Post {
         this.html = html;
     }
 
-    public String getLabels() {
-        return labels;
+    public String getMarkdown() {
+        return markdown;
     }
 
-    public void setLabels(String labels) {
-        this.labels = labels;
+    public void setMarkdown(String markdown) {
+        this.markdown = markdown;
     }
 
     public boolean isIsDraft() {
@@ -141,7 +131,10 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{" + "id=" + id + ", category=" + category + ", title=" + title + ", alias=" + alias + ", html=" + html + ", markdown=" + markdown + ", labels=" + labels + ", isDraft=" + isDraft + ", isActive=" + isActive + ", createTime=" + createTime + ", modifyTime=" + modifyTime + ", publishTime=" + publishTime + '}';
+        return "Post{" + "id=" + id + ", category=" + category + ", title=" + title + ", alias=" + alias + ", html=" + html + ", markdown=" + markdown + ", isDraft=" + isDraft + ", isActive=" + isActive + ", createTime=" + createTime + ", modifyTime=" + modifyTime + ", publishTime=" + publishTime + '}';
     }
+    
+    
+
 
 }

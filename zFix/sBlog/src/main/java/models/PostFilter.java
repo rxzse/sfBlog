@@ -28,7 +28,7 @@ public class PostFilter {
         this.createTimeStart = createTimeStart;
         this.createTimeEnd = createTimeEnd;
     }
-
+    
     public int getCategory() {
         return category;
     }
@@ -38,7 +38,7 @@ public class PostFilter {
     }
 
     public String getTitle() {
-        return title.toLowerCase();
+        return title;
     }
 
     public void setTitle(String title) {
