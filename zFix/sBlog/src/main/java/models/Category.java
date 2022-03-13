@@ -76,5 +76,11 @@ public class Category {
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" + "id=" + id + ", name=" + name + ", alias=" + alias + ", sequence=" + sequence + ", createTime=" + createTime + ", modifyTime=" + modifyTime + '}';
+    }
+    
     
 }
