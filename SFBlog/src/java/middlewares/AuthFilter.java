@@ -40,8 +40,8 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
         
-        if (session == null || session.getAttribute("role") == "admin") {
-            response.sendRedirect(request.getContextPath() + "/auth"); // No logged-in user found, so redirect to login page.
+        if (session == null || session.getAttribute("role") != "admin") {
+            response.sendRedirect(request.getContextPath() + "/auth?type=login"); // No logged-in user found, so redirect to login page.
         } else {
             chain.doFilter(req, res); // Logged-in user found, so just continue request.
         }

@@ -44,6 +44,7 @@ public class AuthController extends HttpServlet {
             redirectRef(request, response, null);
         }
         else {
+            request.setAttribute("type", authType);
             request.setAttribute("isCreated", authService.existsAccount() ? "yes" : "no");
             request.setAttribute("continue", request.getHeader("referer"));
             request.getRequestDispatcher("/views/auth.jsp").forward(request, response);
@@ -83,7 +84,7 @@ public class AuthController extends HttpServlet {
                 session.setAttribute("isAdmin", true);
                 redirectRef(request, response, continueSrc);
             } else {
-                response.sendRedirect("auth");
+                response.sendRedirect("auth?type=login");
             }
         }
         
@@ -95,20 +96,20 @@ public class AuthController extends HttpServlet {
                 session.setAttribute("isAdmin", true);
                 redirectRef(request, response, continueSrc);
             } else {
-                response.sendRedirect("auth");
+                response.sendRedirect("auth?type=login");
             }
         }
         
         // Change password
-        if ("change".equals(authType)) {
+        if ("chgpwd".equals(authType)) {
             String oldPass = request.getParameter("old_pass");
             String newPass = request.getParameter("new_pass");
-            if (session != null && session.getAttribute("user") != null && authService.changePassword(oldPass, newPass)) {
+            if (session != null && session.getAttribute("role") == "admin" && authService.changePassword(oldPass, newPass)) {
                 session.setAttribute("role", "admin");
                 session.setAttribute("isAdmin", true);
                 redirectRef(request, response, continueSrc);
             } else {
-                response.sendRedirect("auth");
+                response.sendRedirect("auth?type=login");
             }
         }
     }

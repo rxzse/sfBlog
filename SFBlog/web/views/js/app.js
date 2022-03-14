@@ -1,13 +1,11 @@
 var asideVue = new Vue({
     el: '#op',
 
-
     data() {
         return {
             isComponentModalActive: false,
             name: "rxz",
             formProps: {
-                type:"login",
                 id: -1,
                 typeName: "Create",
                 name: 'evan@you.com',
@@ -20,7 +18,6 @@ var asideVue = new Vue({
         edit() {
 
             this.formProps = {
-                type:"login",
                 id: -1,
                 typeName: "Edit",
                 name: 'evan@you.com',
@@ -44,12 +41,16 @@ var asideVue = new Vue({
             const formBody = Object.keys(this.formProps).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(this.formProps[key])).join('&');
 
             var request = new XMLHttpRequest();
-            request.open("POST", "/SFBlog/auth", true);
+            request.open("POST", "/SFBlog/admin?action=create_category", true);
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
+
             request.send(formBody);
 
-            console.log(formBody)
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                }
+            };
 
         }
     }

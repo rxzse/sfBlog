@@ -61,4 +61,4 @@
 </div>
 <script src="https://unpkg.com/vue@2"></script>
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
-<script async type="text/javascript" src="./js/app.js"></script>
+<script async type="text/javascript" src="./views/js/app.js"></script>

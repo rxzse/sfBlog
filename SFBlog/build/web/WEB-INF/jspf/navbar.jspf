@@ -20,7 +20,7 @@
                     <div class="field is-grouped">
                         <p class="control">
                             <% if (!isAdmin) {%>
-                            <a class="button is-small is-info is-outlined" href="/SFBlog/auth">
+                            <a class="button is-small is-info is-outlined" href="/SFBlog/auth?type=login">
                                 <span class="icon">
                                     <i class="fa fa-user"></i>
                                 </span>
@@ -28,7 +28,7 @@
                             </a>
                             <%} else {%>
 
-                            <a class="button is-small is-info is-outlined">
+                            <a class="button is-small is-info is-outlined" href="/SFBlog/auth?type=chgpwd"> 
                                 <span class="icon">
                                     <i class="fa fa-key"></i>
                                 </span>
