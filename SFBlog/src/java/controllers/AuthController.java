@@ -37,8 +37,26 @@ public class AuthController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("isCreated", authService.existsAccount() ? "yes" : "no");
-        request.getRequestDispatcher("/views/auth.jsp").forward(request, response);
+        HttpSession session = request.getSession(false);
+        String authType = request.getParameter("type");
+        if ("logout".equals(authType)) {
+            session.invalidate();
+            redirectRef(request, response, null);
+        }
+        else {
+            request.setAttribute("isCreated", authService.existsAccount() ? "yes" : "no");
+            request.setAttribute("continue", request.getHeader("referer"));
+            request.getRequestDispatcher("/views/auth.jsp").forward(request, response);
+        }
+    }
+    
+    private void redirectRef(HttpServletRequest request, HttpServletResponse response, String continueSrc) {
+        try {
+        String referrer = continueSrc;
+        if (referrer == null) referrer = ((HttpServletRequest) request).getHeader("referer");
+        if (referrer == null || referrer.contains("/auth")) referrer = "/index";
+        ((HttpServletResponse) response).sendRedirect(referrer);
+        } catch (Exception e) {};
     }
 
     /**
@@ -54,15 +72,16 @@ public class AuthController extends HttpServlet {
             throws ServletException, IOException {
         String authType = request.getParameter("type");
         String password = request.getParameter("password");
+        String continueSrc = request.getParameter("continue");
         System.out.println("Auth> " + authType);
         
         HttpSession session = request.getSession(false);
         // Login
         if ("login".equals(authType)) {
             if (authService.validate(password)) {
-                
-                session.setAttribute("user", "administrator");
-                response.sendRedirect("/");
+                session.setAttribute("role", "admin");
+                session.setAttribute("isAdmin", true);
+                redirectRef(request, response, continueSrc);
             } else {
                 response.sendRedirect("auth");
             }
@@ -72,8 +91,9 @@ public class AuthController extends HttpServlet {
         if ("new".equals(authType)) {
             if (authService.newAccount(password)) {
    
-                session.setAttribute("user", "administrator");
-                response.sendRedirect("/");
+                session.setAttribute("role", "admin");
+                session.setAttribute("isAdmin", true);
+                redirectRef(request, response, continueSrc);
             } else {
                 response.sendRedirect("auth");
             }
@@ -84,16 +104,12 @@ public class AuthController extends HttpServlet {
             String oldPass = request.getParameter("old_pass");
             String newPass = request.getParameter("new_pass");
             if (session != null && session.getAttribute("user") != null && authService.changePassword(oldPass, newPass)) {
-                session.setAttribute("user", "administrator");
-                response.sendRedirect("/");
+                session.setAttribute("role", "admin");
+                session.setAttribute("isAdmin", true);
+                redirectRef(request, response, continueSrc);
             } else {
                 response.sendRedirect("auth");
             }
-        }
-        
-        // Logout
-        if ("logout".equals(authType)) {
-            session.invalidate();
         }
     }
 

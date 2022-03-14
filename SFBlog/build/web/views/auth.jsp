@@ -46,7 +46,8 @@
                                 <div class="field">
                                     <div class="control">
                                         <input class="input is-large" type="password" name="password" placeholder="Your Password">
-                                        <input hidden="s" name="type" value="<%=authType%>">
+                                        <input hidden name="type" value="<%=authType%>">
+                                        <input hidden name="continue" value="<%=(String) request.getAttribute("continue")%>">
                                     </div>
                                 </div>
                                 <button type="submit" class="button is-block is-info is-large is-fullwidth">Login <i class="fa fa-sign-in"

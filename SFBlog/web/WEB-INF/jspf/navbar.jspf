@@ -1,5 +1,7 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%boolean isAdmin = (session != null) && "admin".equals(session.getAttribute("role"));%>
 <nav class="navbar is-white topNav">
     <div class="container">
         <div class="navbar-brand">
@@ -17,12 +19,14 @@
                 <div class="navbar-item">
                     <div class="field is-grouped">
                         <p class="control">
-                            <a class="button is-small is-info is-outlined">
+                            <% if (!isAdmin) {%>
+                            <a class="button is-small is-info is-outlined" href="/SFBlog/auth">
                                 <span class="icon">
                                     <i class="fa fa-user"></i>
                                 </span>
                                 <span>Login</span>
                             </a>
+                            <%} else {%>
 
                             <a class="button is-small is-info is-outlined">
                                 <span class="icon">
@@ -31,12 +35,14 @@
                                 <span>Change password</span>
                             </a>
 
-                            <a class="button is-small is-info is-outlined">
+                            <a class="button is-small is-info is-outlined" href="/SFBlog/auth?type=logout">
                                 <span class="icon">
                                     <i class="fa fa-arrow-right"></i>
                                 </span>
                                 <span>Logout</span>
                             </a>
+                            
+                            <%}%>
                         </p>
                     </div>
                 </div>
