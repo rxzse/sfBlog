@@ -46,7 +46,8 @@ public class AuthDAO {
     }
 
     public static boolean newAccount(String password) {
-//        boolean eAcc = AuthDAO.existsAccount();
+        boolean eAcc = AuthDAO.existsAccount();
+        if (!eAcc)
         try {
             Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
