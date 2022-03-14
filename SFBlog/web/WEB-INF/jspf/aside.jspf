@@ -6,20 +6,21 @@
             Categories
         </p>
         <ul class="menu-list">
-            <li>
-                <span class="tag is-primary is-medium ">Category 1</span>
-                <span class="icon"> <i class="fa fa-edit" @click="edit(1)"></i></span>
-                <span class="icon"> <i class="fa fa-trash" @click="del(1)"></i></span>
-            </li>
-            <li>
-                <span class="tag is-primary is-medium ">Category 1</span>
-                <span class="icon"> <i class="fa fa-edit"></i></span>
-                <span class="icon"> <i class="fa fa-trash"></i></span>
-            </li>
+            <c:forEach items="${categories}" var="category">
+                <li>
+                    <span class="tag is-primary is-medium "><a href='?category=${category.getId()}'>${category.getName()}</a></span>
+                <c:if test = "${sessionScope.isAdmin}">
+                    <span class="icon"> <i class="fa fa-edit" @click="edit({id: ${category.getId()}, name: '${category.getName()}', alias: '${category.getAlias()}', seq: ${category.getSequence()}})"></i></span>
+                    <span class="icon"> <i class="fa fa-trash" @click="del({id: ${category.getId()}, name: '${category.getName()}'})"></i></span>
+                </c:if>
+
+                </li>
+            </c:forEach>
+
 
             <c:if test = "${sessionScope.isAdmin}">
                 <br>
-                <li><span class="tag is-danger is-medium " @click="isComponentModalActive = true">Create category</span>
+                <li><span class="tag is-danger is-medium " @click="create">Create category</span>
             </c:if>
             </li>
         </ul>

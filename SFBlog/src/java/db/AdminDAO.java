@@ -248,6 +248,43 @@ public class AdminDAO {
 
         return null;
     }
+    
+    public static Post getPostByAlias(String alias) {
+        Post ret = null;
+        try {
+            Connection conn = db.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "select * from post where alias = ?");
+            ps.setString(1, alias);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                ret = new Post(
+                        rs.getInt("id"),
+                        rs.getInt("category"),
+                        rs.getString("title"),
+                        rs.getString("alias"),
+                        rs.getString("html"),
+                        rs.getString("markdown"),
+                        rs.getBoolean("isDraft"),
+                        rs.getBoolean("isActive"),
+                        rs.getDate("createTime"),
+                        rs.getDate("modifyTime"),
+                        rs.getDate("publishTime")
+                );
+            };
+
+            conn.close();
+
+            return ret;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public static boolean newPost(Post nPost) {
         try {
@@ -332,10 +369,10 @@ public class AdminDAO {
 
     public static void main(String[] args) {
         String[] aaa = {"nvt", "abc"};
-        Post nP = new Post(0, 2, "Edited23", "1232", "1232", "aaa", true, true, null, null, null);
+        Post nP = new Post(0, 15, "Edited23", "1232", "1232", "aaa", true, true, null, null, null);
         Category nC = new Category(3, "NvT", "rxzaa", 10023, null, null);
 //        AdminDAO.newCategory(nC);
-//        System.out.println(AdminDAO.newPost(nP));
+        System.out.println(AdminDAO.newPost(nP));
         ArrayList<Category> ct = AdminDAO.getCategories();
         for (Category i : ct) {
             System.out.println(i);

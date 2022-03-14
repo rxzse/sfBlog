@@ -8,48 +8,61 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Management</title>
-    <link rel="stylesheet" type="text/css" href="./views/css/index.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Blog Management</title>
+        <link rel="stylesheet" type="text/css" href="./views/css/index.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+        <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+    </head>
 
-<body>
-    <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
-    <div id="app">
-        <section class="container">
-            <div class="columns">
-                <!-- Aside Menu -->
-                <div class="column is-3">
-                    <%@ include file="/WEB-INF/jspf/aside.jspf" %>
-                </div>
-                <!-- Content list -->
-                <div class="column is-9">
-                    <div class="box content">
-                        <article class="post">
-                            <h4>Post tile 1</h4>
-                            <div class="media">
-                                <div class="media-content">
-                                    <div class="content">
-                                        <p>
-                                            <a href="#">@rxzse</a> Date created &nbsp;
-                                            <span class="tag">Question</span>
-                                        </p>
-                                    </div>
+    <body>
+        <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
+        <div id="app">
+            <section class="container">
+                <div class="columns">
+                    <!-- Aside Menu -->
+                    <div class="column is-3">
+                        <%@ include file="/WEB-INF/jspf/aside.jspf" %>
+                    </div>
+                    <!-- Content list -->
+                    <div class="column is-9">
+                        <div class="box content">
+                            <c:if test = "${action == 'index'}">
+                                <c:forEach items="${posts}" var="post">
+                                    <article class="post">
+                                        <h4><a href="?post=${post.getAlias()}">${post.getTitle()}</a></h4>
+                                        <div class="media">
+                                            <div class="media-content">
+                                                <div class="content">
+                                                    <p>
+                                                        ${post.getPublishTime()}
+                                                        <span class="tag">Question</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test = "${action == 'post'}">
+                                <h2>${content.getTitle()}</h2> 
+                                <small>Published at ${content.getPublishTime()}</small>
+
+                                <hr>
+                                <div class="content">
+                                    <c:out value="${content.getHtml()}" escapeXml="false"/>
                                 </div>
-                            </div>
-                        </article>
+                            </c:if>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </div>
-    <%@ include file="/WEB-INF/jspf/footer.jspf" %>
-    
-</body>
+            </section>
+        </div>
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %>
+
+    </body>
 
 </html>

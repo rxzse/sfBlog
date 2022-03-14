@@ -25,6 +25,8 @@
             boolean isCreated = ((String) request.getAttribute("isCreated")).equals("yes");
             String authType = (String) request.getAttribute("type");
             if (!isCreated) authType = "new";
+            String ref = (String) request.getAttribute("continue");
+            ref = ref != null ? ref : "/admin";
         %>
     </head>
     <body>
@@ -55,7 +57,7 @@
                                         <input class="input is-large" type="password" name="new_pass" placeholder="New Password">
                                         <%}%>
                                         <input hidden name="type" value="<%=authType%>">
-                                        <input hidden name="continue" value="<%=(String) request.getAttribute("continue")%>">
+                                        <input hidden name="continue" value="<%=ref%>">
                                     </div>
                                 </div>
                                 <button type="submit" class="button is-block is-info is-large is-fullwidth">Login <i class="fa fa-sign-in"

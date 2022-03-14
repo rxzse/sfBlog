@@ -1,7 +1,6 @@
 var asideVue = new Vue({
     el: '#op',
 
-
     data() {
         return {
             isComponentModalActive: false,
@@ -39,17 +38,19 @@ var asideVue = new Vue({
             })
         },
         submit(action) {
-            var form_data = new FormData();
-
-            for (var key in this.formProps) {
-                form_data.append(key, this.formProps[key]);
-            }
+            const formBody = Object.keys(this.formProps).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(this.formProps[key])).join('&');
 
             var request = new XMLHttpRequest();
-            request.open("POST", "http://foo.com/submitform.php");
-            request.send(form_data);
+            request.open("POST", "/SFBlog/admin?action=" + action, true);
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-            console.log(form_data)
+            request.send(formBody);
+
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                }
+            };
 
         }
     }
