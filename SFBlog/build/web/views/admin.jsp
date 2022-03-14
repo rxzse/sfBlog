@@ -31,7 +31,7 @@
                     </div>
                     <!-- Content list -->
                     <div class="column is-9">
-                        <div class="box content">
+                        <div class="box content" style="margin-top: 0">
                             <c:if test = "${action == 'index'}">
                                 <c:forEach items="${posts}" var="post">
                                     <article class="post">

@@ -86,10 +86,10 @@ public class IndexDAO {
 //            ps.setBoolean(2, pf.isIsDraft());
             
             int _curIndex = 1;
-            if (condition.contains("isActive")) {
-                ps.setBoolean(_curIndex, pf.isIsActive());
-                _curIndex += 1;
-            }
+//            if (condition.contains("isActive")) {
+//                ps.setBoolean(_curIndex, pf.isIsActive());
+//                _curIndex += 1;
+//            }
             
             if (condition.contains("category")) {
                 ps.setInt(_curIndex, pf.getCategory());
