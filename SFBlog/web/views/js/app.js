@@ -4,16 +4,47 @@ var asideVue = new Vue({
     data() {
         return {
             isComponentModalActive: false,
+            isComponentPostActive: false,
             formProps: {
                 id: -1,
                 typeName: null,
                 name: null,
                 sequence: null,
                 alias: null
+            },
+            formPostProps: {
+                id: -1,
+                typeName: null,
+                title: null,
+                alias: null,
+                html: null,
+                markdown: null,
+                isDraft: false,
+                isActive: true,
+                category: 1
             }
         }
     },
+    computed: {
+        category_alias() {
+
+            if (this.formProps.typeName!=null && this.formProps.typeName.indexOf("Edit") == -1) {
+                this.formProps.alias = this.toAlias(this.formProps.name);
+                return this.toAlias(this.formProps.name);
+            }
+                
+                
+            else
+                return this.formProps.alias;
+        }
+    },
     methods: {
+        toAlias(text) {
+            if (text==null) return "";
+            return text.toLowerCase()
+                    .replace(/[^\w ]+/g, '')
+                    .replace(/ +/g, '_');
+        },
         create(dict) {
             this.formProps = {
                 id: -1,

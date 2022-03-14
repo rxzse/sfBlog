@@ -39,7 +39,7 @@
                                                 <div class="content">
                                                     <p>
                                                         ${post.getPublishTime()}
-                                                        <span class="tag">Question</span>
+                                                        <span class="tag">${post.getCateName()}</span>
                                                     </p>
                                                 </div>
                                             </div>

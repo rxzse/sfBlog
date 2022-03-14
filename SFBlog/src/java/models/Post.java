@@ -23,6 +23,7 @@ public class Post {
     private Date createTime;
     private Date modifyTime;
     private Date publishTime;
+    private String cateName;
 
     public Post() {
     }
@@ -40,6 +41,16 @@ public class Post {
         this.modifyTime = modifyTime;
         this.publishTime = publishTime;
     }
+
+    public String getCateName() {
+        return cateName;
+    }
+
+    public void setCateName(String cateName) {
+        this.cateName = cateName;
+    }
+    
+    
 
     public int getId() {
         return id;

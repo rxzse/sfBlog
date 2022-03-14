@@ -1,10 +1,14 @@
+const mEngine = window.markdownit("commonmark");
 var asideVue = new Vue({
     el: '#op',
 
     data() {
         return {
             isComponentModalActive: false,
+            markdown_src: "",
+            postTitle: "",
             name: "rxz",
+            isPublic: true,
             formProps: {
                 id: -1,
                 typeName: "Create",
@@ -14,7 +18,20 @@ var asideVue = new Vue({
             }
         }
     },
+    computed: {
+        html_src() {
+            return mEngine.render(this.markdown_src);
+        },
+        post_alias() {
+            return this.toAlias(this.postTitle);
+        }
+    },
     methods: {
+        toAlias(text) {
+            return text.toLowerCase()
+                .replace(/[^\w ]+/g, '')
+                .replace(/ +/g, '_');
+        },
         edit() {
 
             this.formProps = {

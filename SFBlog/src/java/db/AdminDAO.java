@@ -160,7 +160,7 @@ public class AdminDAO {
                 condition += " and (createTime between ? and ?)";
             
             System.out.println(condition);
-            PreparedStatement ps = conn.prepareStatement("select * from post where " + condition + " order by publishTime desc");
+            PreparedStatement ps = conn.prepareStatement("SELECT post.*, category.name FROM post join category on post.category = category.id where " + condition + " order by publishTime desc");
             ps.setBoolean(1, pf.isIsActive());
             ps.setBoolean(2, pf.isIsDraft());
             
@@ -186,7 +186,7 @@ public class AdminDAO {
             
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                posts.add(new Post(
+                Post p = new Post(
                         rs.getInt("id"),
                         rs.getInt("category"),
                         rs.getString("title"),
@@ -198,7 +198,9 @@ public class AdminDAO {
                         rs.getDate("createTime"),
                         rs.getDate("modifyTime"),
                         rs.getDate("publishTime")
-                ));
+                );
+                p.setCateName(rs.getString("name"));
+                posts.add(p);
             };
 
             conn.close();
