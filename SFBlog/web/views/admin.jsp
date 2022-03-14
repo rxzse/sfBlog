@@ -16,6 +16,8 @@
         <link rel="stylesheet" type="text/css" href="./views/css/index.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
         <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+        <link rel="stylesheet" type="text/css" href="./views/css/login.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.3.2/markdown-it.min.js"></script>
     </head>
 
     <body>
@@ -33,13 +35,24 @@
                             <c:if test = "${action == 'index'}">
                                 <c:forEach items="${posts}" var="post">
                                     <article class="post">
-                                        <h4><a href="?post=${post.getAlias()}">${post.getTitle()}</a></h4>
+                                        <h4>
+                                            <a href="?post=${post.getAlias()}">${post.getTitle()}</a>
+
+                                            <c:if test = "${sessionScope.isAdmin}">
+                                                <span class="icon"> <i class="fa fa-edit" @click="edit_post({id: ${post.getId()}, title: '${post.getTitle()}', alias: '${post.getAlias()}', isActive: ${post.isIsActive()}, category: ${post.getCategory()}})"></i></span>
+                                                <span class="icon"> <i class="fa fa-trash" @click="del_post({id: ${post.getId()}, title: '${post.getTitle()}'})"></i></span>
+                                                </c:if>
+                                        </h4>
                                         <div class="media">
                                             <div class="media-content">
                                                 <div class="content">
                                                     <p>
+
                                                         ${post.getPublishTime()}
                                                         <span class="tag">${post.getCateName()}</span>
+                                                        <c:if test = "${sessionScope.isAdmin}">
+                                                            <span class="tag">Publish: ${post.isIsActive()} </span>
+                                                        </c:if>
                                                     </p>
                                                 </div>
                                             </div>
@@ -64,5 +77,8 @@
         <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 
     </body>
+    <script src="https://unpkg.com/vue@2"></script>
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+    <script async type="text/javascript" src="./views/js/app.js"></script>
 
 </html>

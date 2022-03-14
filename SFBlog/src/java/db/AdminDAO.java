@@ -146,7 +146,8 @@ public class AdminDAO {
         ArrayList<Post> posts = new ArrayList<>();
         try {
             Connection conn = db.getConnection();
-            String condition = "isActive = ? and isDraft = ?";
+            String condition = "isActive = ?";
+               if (!pf.isIsActive() && ! pf.isIsDraft()) condition = "1 = 1"; // search all
             // by category
             if (pf.getCategory() != -1) condition += " and category = ?";
             
@@ -161,10 +162,15 @@ public class AdminDAO {
             
             System.out.println(condition);
             PreparedStatement ps = conn.prepareStatement("SELECT post.*, category.name FROM post join category on post.category = category.id where " + condition + " order by publishTime desc");
-            ps.setBoolean(1, pf.isIsActive());
-            ps.setBoolean(2, pf.isIsDraft());
             
-            int _curIndex = 3;
+//            ps.setBoolean(2, pf.isIsDraft());
+            
+            int _curIndex = 1;
+            if (condition.contains("isActive")) {
+                ps.setBoolean(_curIndex, pf.isIsActive());
+                _curIndex += 1;
+            }
+            
             if (condition.contains("category")) {
                 ps.setInt(_curIndex, pf.getCategory());
                 _curIndex += 1;

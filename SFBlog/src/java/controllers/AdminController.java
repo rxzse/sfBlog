@@ -79,6 +79,23 @@ public class AdminController extends HttpServlet {
             result = this.deleteCate(request);
         }
         
+        if ("create_post".equals(actionName)) {
+            result = this.createNewPost(request);
+        }
+        
+        if ("edit_post".equals(actionName)) {
+            result = this.editPost(request);
+        }
+        
+        
+        if ("post_markdown".equals(actionName)) {
+            result = this.getPostMarkdownById(request);
+        }
+        
+        if ("delete_post".equals(actionName)) {
+            result = this.deletePost(request);
+        }
+        
         response.getWriter().print(result);
     }
     
@@ -91,10 +108,64 @@ public class AdminController extends HttpServlet {
         try {
             cateId = Integer.parseInt(request.getParameter("category"));
         } catch (Exception e) {}
-        PostFilter pf = new PostFilter(cateId, title, true, true, null, null);
+        PostFilter pf = new PostFilter(cateId, title, false, false, null, null);
         System.out.println(title);
         return adminService.getPosts(pf);
     }
+    
+    private String createNewPost(HttpServletRequest request) {
+        try {
+            String title = request.getParameter("title");
+            String alias = request.getParameter("alias");
+            String markdown = request.getParameter("markdown");
+            String html = request.getParameter("html");
+            boolean isActive = "true".equals(request.getParameter("isActive"));
+            int category = Integer.parseInt(request.getParameter("category"));
+            Post newPost = new Post(-1, category, title, alias, html, markdown, false, isActive, null, null, null);
+            
+            if (adminService.newPost(newPost)) return "success";
+            return "failed [please check parameters or alias]";
+        } catch (Exception e) {
+            return "failed [message: " + e.getMessage() + "]";
+        }
+    }
+    
+    private String editPost(HttpServletRequest request) {
+        try {
+            String title = request.getParameter("title");
+            String alias = request.getParameter("alias");
+            String markdown = request.getParameter("markdown");
+            String html = request.getParameter("html");
+            boolean isActive = "true".equals(request.getParameter("isActive"));
+            int category = Integer.parseInt(request.getParameter("category"));
+            Post newPost = new Post(-1, category, title, alias, html, markdown, false, isActive, null, null, null);
+            if (adminService.editPost(Integer.parseInt(request.getParameter("post_id")), newPost)) return "success";
+            return "failed [please check parameters or alias]";
+        } catch (Exception e) {
+            return "failed [message: " + e.getMessage() + "]";
+        }
+    }
+    
+    private String deletePost(HttpServletRequest request) {
+        try {
+            int cateId = Integer.parseInt(request.getParameter("id"));
+            if (adminService.deletePost(cateId)) return "success";
+            return "failed [please check parameters or id]";
+        } catch (Exception e) {
+            return "failed [message: " + e.getMessage() + "]";
+        }
+    }
+    
+    private String getPostMarkdownById(HttpServletRequest request) {
+        try {
+            int cateId = Integer.parseInt(request.getParameter("id"));
+            Post fPost = adminService.getPostById(cateId);
+            return fPost.getMarkdown();
+        } catch (Exception e) {
+            return "failed [message: " + e.getMessage() + "]";
+        }
+    }
+    
 
     private String createNewCate(HttpServletRequest request) {
         try {

@@ -21,12 +21,14 @@
             <c:if test = "${sessionScope.isAdmin}">
                 <br>
                 <li><span class="tag is-danger is-medium " @click="create">Create category</span>
+                    <li><span class="tag is-danger is-medium " @click="create_post">Create Post</span>
             </c:if>
             </li>
         </ul>
 
     </aside>
     <c:if test = "${sessionScope.isAdmin}">
+        <!--<--Region for category-->
         <b-modal v-model="isComponentModalActive" has-modal-card full-screen :can-cancel="false">
                  <div class="modal-card" style="width: auto">
                 <header class="modal-card-head">
@@ -47,10 +49,11 @@
                     </b-field>
 
                     <b-field label="Alias">
-                        <b-input type="text" name="alias" v-model="formProps.alias" placeholder="Alias indentify" required>
+                        <b-input type="text" name="alias" v-model="formProps.alias" required>
                         </b-input>
+                        <b-button label="Generate" @click="genCateAlias" />
                     </b-field>
-
+                    
                     <b-button label="Save" @click="submit" />
                 </section>
 
@@ -58,8 +61,55 @@
 
             </div>
         </b-modal>
+        
+        <!--Region for post management-->
+        <b-modal v-model="isComponentPostActive" has-modal-card full-screen :can-cancel="false">
+            <div class="modal-card" style="width: auto">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">{{ formPostProps.typeName }}</p>
+                </header>
+
+                <section class="modal-card-body">
+                    <b-field label="Title">
+                        <b-input type="title" v-model="formPostProps.title" placeholder="Your post title" required>
+                        </b-input>
+
+
+                    </b-field>
+                    <b-field label="Category">
+                        <b-select v-model="formPostProps.category" placeholder="Select a name">
+                            <c:forEach items="${categories}" var="category">
+                                <option value="${category.getId()}">${category.getId()} - ${category.getName()} - posts: ${category.getPostCount()}</option>
+                            </c:forEach>
+                        </b-select>
+                    </b-field>
+                    <b-field label="Status" >
+                        <b-switch v-model="formPostProps.isActive">Public</b-switch>
+                    </b-field>
+
+                    <div class="columns">
+                        <!-- Aside Menu -->
+                        <div class="column is-6 full-height">
+                            <textarea v-model="formPostProps.markdown" style="width: 100%; height: 100%;" rows="25"></textarea>
+                        </div>
+                        <!-- Content list -->
+                        <div class="column is-6 full-height">
+                            <div v-html="html_src" class="result-html full-height">
+
+                            </div>
+                        </div>
+                    </div>
+                    <b-field label="Alias">
+                        <b-input type="title" v-model="formPostProps.alias" placeholder="Your post alias" required></b-input>
+                        <b-button label="Generate" @click="genPostAlias" />
+                    </b-field>
+                    <b-button label="Save" @click="submit_post" />
+
+                </section>
+
+                <b-button label="Close" @click="isComponentPostActive = false" />
+
+            </div>
+        </b-modal>
     </c:if>
 </div>
-<script src="https://unpkg.com/vue@2"></script>
-<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
-<script async type="text/javascript" src="./views/js/app.js"></script>
