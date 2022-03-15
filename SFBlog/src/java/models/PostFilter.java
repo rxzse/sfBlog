@@ -15,10 +15,25 @@ public class PostFilter {
     private String title;
     private boolean isDraft;
     private boolean isActive;
+    private int start;
+    private int total;
     private Date createTimeStart, createTimeEnd;
 
     public PostFilter() {
     }
+
+    public PostFilter(int category, String title, boolean isDraft, boolean isActive, int start, int total, Date createTimeStart, Date createTimeEnd) {
+        this.category = category;
+        this.title = title;
+        this.isDraft = isDraft;
+        this.isActive = isActive;
+        this.start = start;
+        this.total = total;
+        this.createTimeStart = createTimeStart;
+        this.createTimeEnd = createTimeEnd;
+    }
+    
+    
 
     public PostFilter(int category, String title, boolean isDraft, boolean isActive, Date createTimeStart, Date createTimeEnd) {
         this.category = category;

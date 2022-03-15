@@ -42,8 +42,14 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
         String pageAction = "index";
         String postParam = request.getParameter("post");
+        System.out.println(request.getParameter("page"));
+        int pageCurrent = 1;
+        try {
+            pageCurrent = Integer.parseInt(request.getParameter("page"));
+        } catch (Exception e) {}
         request.setAttribute("categories", adminService.getCategories());
         if (postParam == null) {
+            request.setAttribute("page", pageCurrent);
             request.setAttribute("posts", this.getPosts(request));
         } else {
             pageAction = "post";
