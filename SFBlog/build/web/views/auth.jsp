@@ -24,7 +24,10 @@
         <%
             boolean isCreated = ((String) request.getAttribute("isCreated")).equals("yes");
             String authType = (String) request.getAttribute("type");
-            if (!isCreated) authType = "new";
+            String errType = (String) request.getAttribute("error");
+            if (!isCreated) {
+                authType = "new";
+            }
             String ref = (String) request.getAttribute("continue");
             ref = ref != null ? ref : "/admin";
         %>
@@ -45,6 +48,9 @@
                         </h3>
                         <hr class="login-hr">
                         <p class="subtitle has-text-black">Please enter password to proceed.</p>
+                        <%if (errType != null) {%>
+                        <p class="subtitle has-text-black" style="color: red">(~_~) Kiểm tra lại thông số!</p>
+                        <%}%>
                         <div class="box">
                             <form method="post">
 

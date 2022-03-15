@@ -39,6 +39,7 @@ public class AuthController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         String authType = request.getParameter("type");
+        String errType = request.getParameter("error");
         if ("logout".equals(authType)) {
             session.invalidate();
             redirectRef(request, response, null);
@@ -47,6 +48,7 @@ public class AuthController extends HttpServlet {
             request.setAttribute("type", authType);
             request.setAttribute("isCreated", authService.existsAccount() ? "yes" : "no");
             request.setAttribute("continue", request.getHeader("referer"));
+            request.setAttribute("error", errType);
             request.getRequestDispatcher("/views/auth.jsp").forward(request, response);
         }
     }
@@ -55,7 +57,7 @@ public class AuthController extends HttpServlet {
         try {
         String referrer = continueSrc;
         if (referrer == null) referrer = ((HttpServletRequest) request).getHeader("referer");
-        if (referrer == null || referrer.contains("/auth")) referrer = "/index";
+        if (referrer == null || referrer.contains("/auth")) referrer = "index";
         if ("logout".equals(request.getParameter("type"))) referrer = referrer.replace("/admin", "/");
         ((HttpServletResponse) response).sendRedirect(referrer);
         } catch (Exception e) {};
@@ -85,7 +87,7 @@ public class AuthController extends HttpServlet {
                 session.setAttribute("isAdmin", true);
                 redirectRef(request, response, continueSrc);
             } else {
-                response.sendRedirect("auth?type=login");
+                response.sendRedirect("auth?type=login&error=");
             }
         }
         
@@ -97,7 +99,7 @@ public class AuthController extends HttpServlet {
                 session.setAttribute("isAdmin", true);
                 redirectRef(request, response, continueSrc);
             } else {
-                response.sendRedirect("auth?type=login");
+                response.sendRedirect("auth?type=new&error=");
             }
         }
         
@@ -110,7 +112,7 @@ public class AuthController extends HttpServlet {
                 session.setAttribute("isAdmin", true);
                 redirectRef(request, response, continueSrc);
             } else {
-                response.sendRedirect("auth?type=login");
+                response.sendRedirect("auth?type=chgpwd&error=");
             }
         }
     }

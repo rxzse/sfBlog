@@ -77,10 +77,10 @@
                             </c:if>
                         </div>
                         <c:if test = "${action == 'index'}">
-                            <nav class="pagination" role="navigation" aria-label="pagination">
+<!--                            <nav class="pagination" role="navigation" aria-label="pagination">
                                 <a id="priv" class="pagination-previous">Previous</a>
                                 <a id="next" class="pagination-next">Next page</a>
-                            </nav>
+                            </nav>-->
                         </c:if>
                     </div>
 

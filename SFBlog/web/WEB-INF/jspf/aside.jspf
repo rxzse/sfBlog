@@ -33,6 +33,7 @@
                  <div class="modal-card" style="width: auto">
                 <header class="modal-card-head">
                     <p class="modal-card-title">{{ formProps.typeName }}</p>
+                    <b-button label="Save" @click="submit" />
                 </header>
 
                 <section class="modal-card-body">
@@ -54,7 +55,7 @@
                         <b-button label="Generate" @click="genCateAlias" />
                     </b-field>
                     
-                    <b-button label="Save" @click="submit" />
+                    
                 </section>
 
                 <b-button label="Close" @click="isComponentModalActive = false" />
@@ -67,6 +68,7 @@
             <div class="modal-card" style="width: auto">
                 <header class="modal-card-head">
                     <p class="modal-card-title">{{ formPostProps.typeName }}</p>
+                    <b-button label="Save" @click="submit_post" />
                 </header>
 
                 <section class="modal-card-body">
@@ -94,7 +96,7 @@
                         </div>
                         <!-- Content list -->
                         <div class="column is-6 full-height">
-                            <div v-html="html_src" class="result-html full-height">
+                            <div v-html="html_src" class="result-html full-height"  style="height: 428px">
 
                             </div>
                         </div>
@@ -103,7 +105,7 @@
                         <b-input type="title" v-model="formPostProps.alias" placeholder="Your post alias" required></b-input>
                         <b-button label="Generate" @click="genPostAlias" />
                     </b-field>
-                    <b-button label="Save" @click="submit_post" />
+                    
 
                 </section>
 
