@@ -66,8 +66,8 @@ public class IndexDAO {
         ArrayList<Post> posts = new ArrayList<>();
         try {
             Connection conn = db.getConnection();
-            String condition = "isActive = ?";
-               if (!pf.isIsActive() && ! pf.isIsDraft()) condition = "1 = 1"; // search all
+            String condition = "isActive = 1";
+               
             // by category
             if (pf.getCategory() != -1) condition += " and category = ?";
             

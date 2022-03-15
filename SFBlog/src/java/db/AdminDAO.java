@@ -377,7 +377,7 @@ public class AdminDAO {
 
     public static void main(String[] args) {
         String[] aaa = {"nvt", "abc"};
-        Post nP = new Post(0, 15, "Edited23", "1232", "1232", "aaa", true, true, null, null, null);
+        Post nP = new Post(0, 1, "Edited23", "1232", "1232", "aaa", true, true, null, null, null);
         Category nC = new Category(3, "NvT", "rxzaa", 10023, null, null);
 //        AdminDAO.newCategory(nC);
         System.out.println(AdminDAO.newPost(nP));

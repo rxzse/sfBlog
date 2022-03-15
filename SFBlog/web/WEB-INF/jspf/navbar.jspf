@@ -13,7 +13,11 @@
         </div>
         <div id="topNav" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="/SFBlog/admin">Home</a>
+                <% if (isAdmin) {%>
+                <a class="navbar-item" href="/SFBlog/admin">Admin</a>
+                <%} else {%>
+                <a class="navbar-item" href="/SFBlog/">Home</a>
+                <%}%>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
@@ -41,10 +45,27 @@
                                 </span>
                                 <span>Logout</span>
                             </a>
-                            
+
                             <%}%>
                         </p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<nav class="navbar is-white">
+    <div class="container">
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <form action="/SFBlog/index" method="get">
+                        <input class="input" name="title" type="search" placeholder="Search by title...">
+                    </form>
+                    
                 </div>
             </div>
         </div>

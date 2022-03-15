@@ -56,6 +56,7 @@ public class AuthController extends HttpServlet {
         String referrer = continueSrc;
         if (referrer == null) referrer = ((HttpServletRequest) request).getHeader("referer");
         if (referrer == null || referrer.contains("/auth")) referrer = "/index";
+        if ("logout".equals(request.getParameter("type"))) referrer = referrer.replace("/admin", "/");
         ((HttpServletResponse) response).sendRedirect(referrer);
         } catch (Exception e) {};
     }

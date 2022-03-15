@@ -50,11 +50,17 @@
 
                                                         ${post.getPublishTime()}
                                                         <span class="tag">${post.getCateName()}</span>
-                                                        <c:if test = "${sessionScope.isAdmin}">
-                                                            <span class="tag">Publish: ${post.isIsActive()} </span>
-                                                        </c:if>
+
                                                     </p>
                                                 </div>
+                                            </div>
+                                            <div class="media-right">
+                                                <c:if test = "${sessionScope.isAdmin && post.isIsActive()}">
+                                                    <span class="has-text-grey-light"><i class="fa fa-eye"></i></span>
+                                                    </c:if>
+                                                    <c:if test = "${!post.isIsActive()}">
+                                                    <span class="has-text-grey-light"><i class="fa fa-eye-slash"></i></span>
+                                                    </c:if>
                                             </div>
                                         </div>
                                     </article>
@@ -70,6 +76,7 @@
                                 </div>
                             </c:if>
                         </div>
+
                     </div>
                 </div>
             </section>

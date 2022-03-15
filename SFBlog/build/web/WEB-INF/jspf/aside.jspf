@@ -8,7 +8,7 @@
         <ul class="menu-list">
             <c:forEach items="${categories}" var="category">
                 <li>
-                    <span class="tag is-primary is-medium "><a href='?category=${category.getId()}'>${category.getName()}</a></span>
+                    <span class="tag is-medium "><b><a href='?category=${category.getId()}'>${category.getName()}</a></b></span>
                 <c:if test = "${sessionScope.isAdmin}">
                     <span class="icon"> <i class="fa fa-edit" @click="edit({id: ${category.getId()}, name: '${category.getName()}', alias: '${category.getAlias()}', seq: ${category.getSequence()}})"></i></span>
                     <span class="icon"> <i class="fa fa-trash" @click="del({id: ${category.getId()}, name: '${category.getName()}'})"></i></span>

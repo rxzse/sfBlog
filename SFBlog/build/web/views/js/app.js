@@ -1,3 +1,12 @@
+(function() {
+    var burger = document.querySelector('.burger');
+    var menu = document.querySelector('#'+burger.dataset.target);
+    burger.addEventListener('click', function() {
+        burger.classList.toggle('is-active');
+        menu.classList.toggle('is-active');
+    });
+})();
+
 const mEngine = window.markdownit("commonmark");
 
 var asideVue = new Vue({
@@ -7,6 +16,7 @@ var asideVue = new Vue({
         return {
             isComponentModalActive: false,
             isComponentPostActive: false,
+            current: 10,
             formProps: {
                 id: -1,
                 typeName: null,

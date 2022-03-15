@@ -135,6 +135,7 @@ public class AdminController extends HttpServlet {
             String title = request.getParameter("title");
             String alias = request.getParameter("alias");
             String markdown = request.getParameter("markdown");
+            System.out.println(markdown);
             String html = request.getParameter("html");
             boolean isActive = "true".equals(request.getParameter("isActive"));
             int category = Integer.parseInt(request.getParameter("category"));
