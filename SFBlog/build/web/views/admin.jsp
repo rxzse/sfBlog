@@ -33,38 +33,44 @@
                     <div class="column is-9">
                         <div class="box content" style="margin-top: 0">
                             <c:if test = "${action == 'index'}">
-                                <c:forEach items="${posts}" var="post">
-                                    <article class="post">
-                                        <h4>
-                                            <a href="?post=${post.getAlias()}">${post.getTitle()}</a>
+                                <table border="1">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Title</th>
+                                            <th>Publish Time</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${posts}" var="post">
 
-                                            <c:if test = "${sessionScope.isAdmin}">
-                                                <span class="icon"> <i class="fa fa-edit" @click="edit_post({id: ${post.getId()}, title: '${post.getTitle()}', alias: '${post.getAlias()}', isActive: ${post.isIsActive()}, category: ${post.getCategory()}})"></i></span>
-                                                <span class="icon"> <i class="fa fa-trash" @click="del_post({id: ${post.getId()}, title: '${post.getTitle()}'})"></i></span>
-                                                </c:if>
-                                        </h4>
-                                        <div class="media">
-                                            <div class="media-content">
-                                                <div class="content">
-                                                    <p>
+                                            <tr>
+                                                <td>${post.getId()}</td>
+                                                <td><a href="?post=${post.getAlias()}">${post.getTitle()}</a></td>
+                                                <td>${post.getPublishTime()}</td>
+                                                <td>${post.getCateName()}</td>
+                                                
+                                                <td>
+                                                    <c:if test = "${sessionScope.isAdmin && post.isIsActive()}">
+                                                        <span class="has-text-grey-light"><i class="fa fa-eye"></i></span>
+                                                        </c:if>
+                                                        <c:if test = "${!post.isIsActive()}">
+                                                        <span class="has-text-grey-light"><i class="fa fa-eye-slash"></i></span>
+                                                        </c:if>
+                                                </td>
+                                                <td><span class="icon"> <i class="fa fa-edit" @click="edit_post({id: ${post.getId()}, title: '${post.getTitle()}', alias: '${post.getAlias()}', isActive: ${post.isIsActive()}, category: ${post.getCategory()}})"></i></span></td>
+                                                <td><span class="icon"> <i class="fa fa-trash" @click="del_post({id: ${post.getId()}, title: '${post.getTitle()}'})"></i></span></td>
+                                            </tr>
 
-                                                        ${post.getPublishTime()}
-                                                        <span class="tag">${post.getCateName()}</span>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
 
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="media-right">
-                                                <c:if test = "${sessionScope.isAdmin && post.isIsActive()}">
-                                                    <span class="has-text-grey-light"><i class="fa fa-eye"></i></span>
-                                                    </c:if>
-                                                    <c:if test = "${!post.isIsActive()}">
-                                                    <span class="has-text-grey-light"><i class="fa fa-eye-slash"></i></span>
-                                                    </c:if>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </c:forEach>
+                                
                             </c:if>
                             <c:if test = "${action == 'post'}">
                                 <h2>${content.getTitle()}</h2> 
@@ -77,10 +83,10 @@
                             </c:if>
                         </div>
                         <c:if test = "${action == 'index'}">
-<!--                            <nav class="pagination" role="navigation" aria-label="pagination">
-                                <a id="priv" class="pagination-previous">Previous</a>
-                                <a id="next" class="pagination-next">Next page</a>
-                            </nav>-->
+                            <!--                            <nav class="pagination" role="navigation" aria-label="pagination">
+                                                            <a id="priv" class="pagination-previous">Previous</a>
+                                                            <a id="next" class="pagination-next">Next page</a>
+                                                        </nav>-->
                         </c:if>
                     </div>
 

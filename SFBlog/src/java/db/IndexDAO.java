@@ -35,8 +35,11 @@ public class IndexDAO {
             Connection conn = db.getConnection();
 
             PreparedStatement ps = conn.prepareStatement(
-                    "select category.id, category.name, category.alias, category.sequence, category.createTime, category.modifyTime, count(post.id) as postCount from (category left join post on category.id = post.category) group by id order by sequence");
-            ResultSet rs = ps.executeQuery();
+//                    "select category.id, category.name, category.alias, category.sequence, category.createTime, category.modifyTime, count(post.id) as postCount from (category left join post on category.id = post.category) group by id order by sequence");
+                        "select category.id, category.name, category.alias, category.sequence, category.createTime, category.modifyTime, count(post.id) as postCount from \n" +
+"(category left join post on category.id = post.category) \n" +
+"group by category.id, category.name, category.alias, category.sequence, category.createTime, category.modifyTime order by category.sequence");
+                    ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 categories.add(new Category(

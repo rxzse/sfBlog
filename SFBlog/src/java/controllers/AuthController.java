@@ -93,6 +93,7 @@ public class AuthController extends HttpServlet {
         
         // New setup
         if ("new".equals(authType)) {
+            System.out.println("Create new setup");
             if (authService.newAccount(password)) {
    
                 session.setAttribute("role", "admin");

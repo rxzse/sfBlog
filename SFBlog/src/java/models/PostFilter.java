@@ -43,6 +43,25 @@ public class PostFilter {
         this.createTimeStart = createTimeStart;
         this.createTimeEnd = createTimeEnd;
     }
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+    
+    
+    
     
     public int getCategory() {
         return category;

@@ -35,8 +35,11 @@ public class AdminDAO {
             Connection conn = db.getConnection();
 
             PreparedStatement ps = conn.prepareStatement(
-                    "select category.id, category.name, category.alias, category.sequence, category.createTime, category.modifyTime, count(post.id) as postCount from (category left join post on category.id = post.category) group by id order by sequence");
-            ResultSet rs = ps.executeQuery();
+//                    "select category.id, category.name, category.alias, category.sequence, category.createTime, category.modifyTime, count(post.id) as postCount from (category left join post on category.id = post.category) group by id order by sequence");
+                        "select category.id, category.name, category.alias, category.sequence, category.createTime, category.modifyTime, count(post.id) as postCount from \n" +
+"(category left join post on category.id = post.category) \n" +
+"group by category.id, category.name, category.alias, category.sequence, category.createTime, category.modifyTime order by category.sequence");
+                    ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 categories.add(new Category(
@@ -299,20 +302,27 @@ public class AdminDAO {
             Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
 
-            String sql = "insert into post (title, alias, html, markdown, labels, isDraft, isActive, createTime, modifyTime, publishTime, category) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into post (title, alias, html, markdown, isDraft, isActive, createTime, modifyTime, publishTime, category) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, nPost.getTitle());
             ps.setString(2, nPost.getAlias());
             ps.setString(3, nPost.getHtml());
             ps.setString(4, nPost.getMarkdown());
 
-            ps.setString(5, "nothing");
-            ps.setBoolean(6, nPost.isIsDraft());
-            ps.setBoolean(7, nPost.isIsActive());
+//            ps.setString(5, "nothing");
+//            ps.setBoolean(6, nPost.isIsDraft());
+//            ps.setBoolean(7, nPost.isIsActive());
+//            ps.setDate(8, cur);
+//            ps.setDate(9, cur);
+//            ps.setDate(10, cur);
+//            ps.setInt(11, nPost.getCategory());
+
+            ps.setBoolean(5, nPost.isIsDraft());
+            ps.setBoolean(6, nPost.isIsActive());
+            ps.setDate(7, cur);
             ps.setDate(8, cur);
             ps.setDate(9, cur);
-            ps.setDate(10, cur);
-            ps.setInt(11, nPost.getCategory());
+            ps.setInt(10, nPost.getCategory());
             boolean result = ps.executeUpdate() != 0;
             conn.close();
             return result;
@@ -329,19 +339,26 @@ public class AdminDAO {
             Date cur = Date.valueOf(LocalDateTime.now().toLocalDate());
             Connection conn = db.getConnection();
 
-            String sql = "update post set title = ?, alias = ?, html = ?, markdown = ?, labels = ?, isDraft = ?, isActive = ?, modifyTime = ?, publishTime = ?, category = ? where id = ?";
+            String sql = "update post set title = ?, alias = ?, html = ?, markdown = ?, isDraft = ?, isActive = ?, modifyTime = ?, publishTime = ?, category = ? where id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, uPost.getTitle());
             ps.setString(2, uPost.getAlias());
             ps.setString(3, uPost.getHtml());
             ps.setString(4, uPost.getMarkdown());
-            ps.setString(5, "nothing");
-            ps.setBoolean(6, uPost.isIsDraft());
-            ps.setBoolean(7, uPost.isIsActive());
+//            ps.setString(5, "nothing");
+//            ps.setBoolean(6, uPost.isIsDraft());
+//            ps.setBoolean(7, uPost.isIsActive());
+//            ps.setDate(8, cur);
+//            ps.setDate(9, cur);
+//            ps.setInt(10, uPost.getCategory());
+//            ps.setInt(11, id);
+
+            ps.setBoolean(5, uPost.isIsDraft());
+            ps.setBoolean(6, uPost.isIsActive());
+            ps.setDate(7, cur);
             ps.setDate(8, cur);
-            ps.setDate(9, cur);
-            ps.setInt(10, uPost.getCategory());
-            ps.setInt(11, id);
+            ps.setInt(9, uPost.getCategory());
+            ps.setInt(10, id);
             boolean result = ps.executeUpdate() != 0;
 
             conn.close();
